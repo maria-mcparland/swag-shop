@@ -1,9 +1,11 @@
 var express = require("express");
+const { gatherAccessToken } = require("../utils/gatherOAuthToken");
 var router = express.Router();
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.send("Hello World");
+router.get("/", async function (req, res, next) {
+  const access_token = await gatherAccessToken();
+  console.log("request received");
+  res.send({ token: access_token });
 });
 
 module.exports = router;

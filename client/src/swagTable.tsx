@@ -6,6 +6,16 @@ type SwagTableProps = {
 
 const addToCardClicked = (id: number) => {
   console.log(id);
+  fetch(`/api`)
+    .then((response) => response.json())
+    .then((data) => {
+      // Handle the response data here
+      console.log(data);
+    })
+    .catch((error) => {
+      // Handle any errors here
+      console.error(error);
+    });
 };
 
 const SwagCard = ({ name, price, description, stock, id }: Swag) => (
@@ -14,15 +24,13 @@ const SwagCard = ({ name, price, description, stock, id }: Swag) => (
     <p>Price: ${price}</p>
     <p>{description}</p>
     <p>{stock > 0 ? "In Stock" : "Out of Stock"}</p>
-    <button disabled={stock === 0} onClick={() => addToCardClicked(id)}>
+    <button disabled={stock == 0} onClick={() => addToCardClicked(id)}>
       Add to Cart
     </button>
   </div>
 );
 
 export const SwagTable = ({ swagData }: SwagTableProps) => {
-  console.log(swagData);
-
   return (
     <div>
       {swagData &&
