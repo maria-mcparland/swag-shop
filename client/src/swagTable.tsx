@@ -1,5 +1,5 @@
 import { Swag } from "./App";
-
+import React from "react";
 type SwagTableProps = {
   swagData: Swag[];
 };
@@ -25,7 +25,6 @@ export const SwagTable = ({ swagData }: SwagTableProps) => {
 
   return (
     <div>
-      Hello from SwagTable
       {swagData &&
         swagData.length > 0 &&
         swagData.map((swag) => <SwagCard key={swag.id} {...swag} />)}

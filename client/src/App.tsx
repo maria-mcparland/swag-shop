@@ -1,6 +1,7 @@
 import "./App.css";
 import { SwagTable } from "./swagTable";
 import { useEffect, useState } from "react";
+import React from "react";
 export type Swag = {
   id: number;
   name: string;
@@ -17,7 +18,7 @@ function App() {
       try {
         const response = await fetch("/swag.json");
         const data = await response.json();
-        const newSwag = [];
+        const newSwag: Swag[] = [];
         newSwag.push(data);
         setSwagData(newSwag);
       } catch (error) {
