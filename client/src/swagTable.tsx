@@ -6,7 +6,7 @@ type SwagTableProps = {
 
 const addToCardClicked = (id: number) => {
   console.log(id);
-  fetch(`/api`)
+  fetch(`/api/accept/createAPayment`)
     .then((response) => response.json())
     .then((data) => {
       // Handle the response data here
@@ -25,7 +25,7 @@ const SwagCard = ({ name, price, description, stock, id }: Swag) => (
     <p>{description}</p>
     <p>{stock > 0 ? "In Stock" : "Out of Stock"}</p>
     <button disabled={stock == 0} onClick={() => addToCardClicked(id)}>
-      Add to Cart
+      Buy now
     </button>
   </div>
 );

@@ -2,6 +2,7 @@ var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var indexRouter = require("./routes/index");
+var acceptPaymentRouter = require("./routes/acceptPayments");
 
 var app = express();
 
@@ -9,6 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api", indexRouter);
+app.use("/api/accept/", acceptPaymentRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
