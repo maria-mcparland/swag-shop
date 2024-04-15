@@ -10,7 +10,10 @@ const addToCardClicked = (id: number) => {
     .then((response) => response.json())
     .then((data) => {
       // Handle the response data here
-      console.log(data);
+      console.log(data.response.responseStatus);
+      if (data.response.responseStatus == "SUCCESS") {
+        alert("Payment successful");
+      }
     })
     .catch((error) => {
       // Handle any errors here

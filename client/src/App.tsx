@@ -1,7 +1,10 @@
+import { useSearchParams } from "react-router-dom";
 import "./App.css";
 import { SwagTable } from "./swagTable";
 import { useEffect, useState } from "react";
+
 import React from "react";
+import { decryptData } from "./utils/encryption";
 export type Swag = {
   id: number;
   name: string;
@@ -12,6 +15,12 @@ export type Swag = {
 
 function App() {
   const [swagData, setSwagData] = useState<Swag[]>([]);
+  const [searchParams] = useSearchParams();
+  const encryptedPoints = searchParams.get("points");
+  let points = 0;
+  if (encryptedPoints) {
+    points = parseInt(decryptData(encryptedPoints));
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +41,7 @@ function App() {
   return (
     <main>
       <h1> J.P. Morgan Payments Swag</h1>
+      <p>Current Balance: {points}</p>
       <SwagTable swagData={swagData} />
     </main>
   );
