@@ -1,7 +1,6 @@
 import React from "react";
-
 import { useState } from "react";
-import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
+import { Dialog } from "@headlessui/react";
 
 export const Header = ({ balance }: { balance: number }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

@@ -20,6 +20,8 @@ function App() {
   const encryptedPoints = searchParams.get("points");
   let points = 0;
   if (encryptedPoints) {
+    console.log(encryptedPoints);
+    console.log(decryptData(encryptedPoints));
     points = parseInt(decryptData(encryptedPoints));
   }
 
@@ -43,7 +45,7 @@ function App() {
   return (
     <main className="bg-white">
       <Header balance={points} />
-      <div className="grid grid-cols-4 gap-4 px-4 py-16 ">
+      <div className="grid grid-flow-col auto-cols-auto gap-4 px-4 py-16 ">
         {swagData &&
           swagData.length > 0 &&
           swagData.map((swag) => (
