@@ -20,9 +20,8 @@ function App() {
   const encryptedPoints = searchParams.get("points");
   let points = 0;
   if (encryptedPoints) {
-    points = parseInt(decryptData(encryptedPoints));
+    points = parseInt(decryptData(decodeURIComponent(encryptedPoints)));
   }
-
   const addToCardClicked = (id: number) => {
     console.log(id);
     // fetch(`/api/accept/createAPayment`)
