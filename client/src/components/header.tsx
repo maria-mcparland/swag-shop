@@ -137,6 +137,14 @@ export const Header = ({ balance, itemsInBasket, openBasket }: HeaderProps) => {
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   ${balance}
+                  <button onClick={() => openBasket(true)}>
+                    <img
+                      className="h-8 w-auto"
+                      src="/basket.png"
+                      alt="Basket png"
+                    />
+                    {itemsInBasket}
+                  </button>
                 </a>
               </div>
             </div>
