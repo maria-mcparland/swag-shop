@@ -1,7 +1,18 @@
-{
-    "id": "123",
-    "name": "item1",
-    "price": 200,
-    "description": "item1 description",
-    "stock": 1
-}
+[
+    {
+        "id": "1",
+        "name": "Payments Hoodie",
+        "price": 200,
+        "description": "An awesome J.P. Morgan hoodie!",
+        "stock": 12,
+        "image": "/images/hoodie.png"
+    },
+    {
+        "id": "2",
+        "name": "Payments Pen",
+        "price": 20,
+        "description": "An awesome J.P. Morgan pen!",
+        "stock": 12,
+        "image": "/images/pen.png"
+    }
+]

@@ -1,7 +1,6 @@
-import { useSearchParams } from "react-router-dom";
+import { useLoaderData, useSearchParams } from "react-router-dom";
 import "./App.css";
-import { SwagTable } from "./swagTable";
-import { useEffect, useState } from "react";
+import { SwagCard } from "./swagCard";
 
 import React from "react";
 import { decryptData } from "./utils/encryption";
@@ -11,10 +10,11 @@ export type Swag = {
   price: number;
   description: string;
   stock: number;
+  image: string;
 };
 
 function App() {
-  const [swagData, setSwagData] = useState<Swag[]>([]);
+  const swagData = useLoaderData() as Swag[];
   const [searchParams] = useSearchParams();
   const encryptedPoints = searchParams.get("points");
   let points = 0;
@@ -22,27 +22,41 @@ function App() {
     points = parseInt(decryptData(encryptedPoints));
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/swag.json");
-        const data = await response.json();
-        const newSwag: Swag[] = [];
-        newSwag.push(data);
-        setSwagData(newSwag);
-      } catch (error) {
-        console.error("Error fetching swag data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const addToCardClicked = (id: number) => {
+    console.log(id);
+    fetch(`/api/accept/createAPayment`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data here
+        console.log(data.response.responseStatus);
+        if (data.response.responseStatus == "SUCCESS") {
+          alert("Payment successful");
+        }
+      })
+      .catch((error) => {
+        // Handle any errors here
+        console.error(error);
+      });
+  };
 
   return (
-    <main>
-      <h1> J.P. Morgan Payments Swag</h1>
+    <main className="bg-white">
+      <h1 className="text-3xl font-bold underline">
+        J.P. Morgan Payments Swag
+      </h1>
       <p>Current Balance: {points}</p>
-      <SwagTable swagData={swagData} />
+
+      <div className="grid grid-cols-4 gap-4">
+        {swagData &&
+          swagData.length > 0 &&
+          swagData.map((swag) => (
+            <SwagCard
+              key={swag.id}
+              item={swag}
+              onClickFunction={addToCardClicked}
+            />
+          ))}
+      </div>
     </main>
   );
 }
