@@ -2,7 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 
-export const Header = ({ balance }: { balance: number }) => {
+type HeaderProps = {
+  balance: number;
+  itemsInBasket: number;
+  openBasket: (open: boolean) => void;
+};
+export const Header = ({ balance, itemsInBasket, openBasket }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navLinks = [
     { title: "Swag", path: "/" },
@@ -65,6 +70,10 @@ export const Header = ({ balance }: { balance: number }) => {
           <p className="text-sm font-semibold leading-6 text-gray-900">
             ${balance}
           </p>
+          <button onClick={() => openBasket(true)}>
+            <img className="h-8 w-auto" src="/basket.png" alt="Basket png" />
+            {itemsInBasket}
+          </button>
         </div>
       </nav>
       <Dialog

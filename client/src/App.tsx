@@ -5,6 +5,7 @@ import { SwagCard } from "./components/swagCard";
 import React from "react";
 import { decryptData } from "./utils/encryption";
 import { Header } from "./components/header";
+import Basket from "./components/basket";
 export type Swag = {
   id: number;
   name: string;
@@ -18,12 +19,35 @@ function App() {
   const swagData = useLoaderData() as Swag[];
   const [searchParams] = useSearchParams();
   const encryptedPoints = searchParams.get("points");
+  const [cartProducts, setCartProducts] = React.useState([] as Swag[]);
+  const [basketOpen, setOpen] = React.useState(false);
+
   let points = 0;
   if (encryptedPoints) {
     points = parseInt(decryptData(decodeURIComponent(encryptedPoints)));
   }
-  const addToCardClicked = (id: number) => {
-    console.log(id);
+  const removeFromBasket = (id: number) => {
+    const removedProduct = cartProducts.find((swag) => swag.id === id);
+    const array = [...cartProducts];
+    if (removedProduct) {
+      const index = array.indexOf(removedProduct);
+      if (index !== -1) {
+        array.splice(index, 1);
+        setCartProducts(array);
+      }
+    } else {
+      //TODO error handling
+    }
+  };
+  const addToBasketClicked = (id: number) => {
+    const insertedProduct = swagData.find((swag) => swag.id === id);
+    if (insertedProduct) {
+      const nextProducts = [...cartProducts, insertedProduct];
+      setCartProducts(nextProducts);
+    } else {
+      //todo error handling
+    }
+
     // fetch(`/api/accept/createAPayment`)
     //   .then((response) => response.json())
     //   .then((data) => {
@@ -41,7 +65,11 @@ function App() {
 
   return (
     <main className="bg-white">
-      <Header balance={points} />
+      <Header
+        balance={points}
+        itemsInBasket={cartProducts.length}
+        openBasket={setOpen}
+      />
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 px-4 py-16 ">
         {swagData &&
           swagData.length > 0 &&
@@ -49,10 +77,16 @@ function App() {
             <SwagCard
               key={swag.id}
               item={swag}
-              onClickFunction={addToCardClicked}
+              onClickFunction={addToBasketClicked}
             />
           ))}
       </div>
+      <Basket
+        basketOpen={basketOpen}
+        setOpen={setOpen}
+        products={cartProducts}
+        removeFromBasket={removeFromBasket}
+      />
     </main>
   );
 }
