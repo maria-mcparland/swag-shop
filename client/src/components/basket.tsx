@@ -16,6 +16,7 @@ export default function Basket({
   products,
   removeFromBasket,
 }: BasketProps) {
+  const totalCost = products.reduce((acc, product) => acc + product.price, 0);
   return (
     <Transition.Root show={basketOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -125,7 +126,7 @@ export default function Basket({
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>$262.00</p>
+                        <p>${totalCost}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
                         Shipping and taxes calculated at checkout.
