@@ -1,9 +1,10 @@
 import { useLoaderData, useSearchParams } from "react-router-dom";
 import "./App.css";
-import { SwagCard } from "./swagCard";
+import { SwagCard } from "./components/swagCard";
 
 import React from "react";
 import { decryptData } from "./utils/encryption";
+import { Header } from "./components/header";
 export type Swag = {
   id: number;
   name: string;
@@ -41,12 +42,8 @@ function App() {
 
   return (
     <main className="bg-white">
-      <h1 className="text-3xl font-bold underline">
-        J.P. Morgan Payments Swag
-      </h1>
-      <p>Current Balance: {points}</p>
-
-      <div className="grid grid-cols-4 gap-4">
+      <Header balance={points} />
+      <div className="grid grid-cols-4 gap-4 px-4 py-16 ">
         {swagData &&
           swagData.length > 0 &&
           swagData.map((swag) => (
