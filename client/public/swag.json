@@ -1,7 +1,7 @@
 [
     {
         "id": "1",
-        "name": "Payments Hoodie",
+        "name": "Hoodie",
         "price": 200,
         "description": "An awesome J.P. Morgan hoodie!",
         "stock": 12,
@@ -9,10 +9,34 @@
     },
     {
         "id": "2",
-        "name": "Payments Pen",
+        "name": "Pen",
         "price": 20,
         "description": "An awesome J.P. Morgan pen!",
         "stock": 12,
         "image": "/images/pen.png"
+    },
+    {
+        "id": "3",
+        "name": "Lanyard",
+        "price": 25,
+        "description": "An awesome J.P. Morgan lanyard!",
+        "stock": 12,
+        "image": "/images/lanyard.png"
+    },
+    {
+        "id": "4",
+        "name": "Sticker",
+        "price": 10,
+        "description": "An awesome J.P. Morgan sticker!",
+        "stock": 12,
+        "image": "/images/sticker.png"
+    },
+    {
+        "id": "5",
+        "name": "T-shirt",
+        "price": 150,
+        "description": "An awesome J.P. Morgan t-shirt!",
+        "stock": 12,
+        "image": "/images/top.png"
     }
 ]

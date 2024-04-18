@@ -20,32 +20,30 @@ function App() {
   const encryptedPoints = searchParams.get("points");
   let points = 0;
   if (encryptedPoints) {
-    console.log(encryptedPoints);
-    console.log(decryptData(encryptedPoints));
     points = parseInt(decryptData(encryptedPoints));
   }
 
   const addToCardClicked = (id: number) => {
     console.log(id);
-    fetch(`/api/accept/createAPayment`)
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response data here
-        console.log(data.response.responseStatus);
-        if (data.response.responseStatus == "SUCCESS") {
-          alert("Payment successful");
-        }
-      })
-      .catch((error) => {
-        // Handle any errors here
-        console.error(error);
-      });
+    // fetch(`/api/accept/createAPayment`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     // Handle the response data here
+    //     console.log(data.response.responseStatus);
+    //     if (data.response.responseStatus == "SUCCESS") {
+    //       alert("Payment successful");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     // Handle any errors here
+    //     console.error(error);
+    //   });
   };
 
   return (
     <main className="bg-white">
       <Header balance={points} />
-      <div className="grid grid-flow-col auto-cols-auto gap-4 px-4 py-16 ">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 px-4 py-16 ">
         {swagData &&
           swagData.length > 0 &&
           swagData.map((swag) => (
