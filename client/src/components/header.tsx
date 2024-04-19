@@ -7,12 +7,25 @@ type HeaderProps = {
   itemsInBasket: number;
   openBasket: (open: boolean) => void;
 };
+
 export const Header = ({ balance, itemsInBasket, openBasket }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navLinks = [
     { title: "Swag", path: "/" },
     { title: "Asteroids", path: "https://asteroids.unicorn-payments.com" },
   ];
+
+  const BasketButton = () => (
+    <button
+      onClick={() => openBasket(true)}
+      className="relative inline-flex w-fit"
+    >
+      <div className="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-red-700 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white">
+        {itemsInBasket}
+      </div>
+      <img className="h-8 w-auto" src="/basket.png" alt="Basket png" />
+    </button>
+  );
   return (
     <header className="bg-white">
       <nav
@@ -70,10 +83,7 @@ export const Header = ({ balance, itemsInBasket, openBasket }: HeaderProps) => {
           <p className="text-sm font-semibold leading-6 text-gray-900">
             ${balance}
           </p>
-          <button onClick={() => openBasket(true)}>
-            <img className="h-8 w-auto" src="/basket.png" alt="Basket png" />
-            {itemsInBasket}
-          </button>
+          <BasketButton />
         </div>
       </nav>
       <Dialog
@@ -137,14 +147,7 @@ export const Header = ({ balance, itemsInBasket, openBasket }: HeaderProps) => {
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   ${balance}
-                  <button onClick={() => openBasket(true)}>
-                    <img
-                      className="h-8 w-auto"
-                      src="/basket.png"
-                      alt="Basket png"
-                    />
-                    {itemsInBasket}
-                  </button>
+                  <BasketButton />
                 </a>
               </div>
             </div>
