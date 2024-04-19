@@ -4,34 +4,15 @@ import { Dialog } from "@headlessui/react";
 
 type HeaderProps = {
   balance: number;
-  itemsInBasket: number;
-  openBasket: (open: boolean) => void;
 };
 
-export const Header = ({ balance, itemsInBasket, openBasket }: HeaderProps) => {
+export const Header = ({ balance }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navLinks = [
     { title: "Swag", path: "/" },
     { title: "Asteroids", path: "https://asteroids.unicorn-payments.com" },
   ];
 
-  const BasketButton = () => (
-    <button
-      onClick={() => openBasket(true)}
-      className="relative inline-flex w-fit"
-    >
-      {itemsInBasket > 0 && (
-        <div
-          className={`${
-            itemsInBasket === 1 ? "animate-notification-ping" : ""
-          } absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-indigo-600 px-2.5 py-1 text-center align-baseline text-xs font-bold leading-none text-white`}
-        >
-          {itemsInBasket}
-        </div>
-      )}
-      <img className="h-8 w-auto" src="/basket.png" alt="Basket png" />
-    </button>
-  );
   return (
     <header className="bg-white">
       <nav
@@ -87,9 +68,8 @@ export const Header = ({ balance, itemsInBasket, openBasket }: HeaderProps) => {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <p className="text-sm font-semibold leading-6 text-gray-900">
-            ${balance}
+            Current funds: ${balance}
           </p>
-          <BasketButton />
         </div>
       </nav>
       <Dialog
@@ -152,8 +132,7 @@ export const Header = ({ balance, itemsInBasket, openBasket }: HeaderProps) => {
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  ${balance}
-                  <BasketButton />
+                  Current funds: ${balance}
                 </a>
               </div>
             </div>
