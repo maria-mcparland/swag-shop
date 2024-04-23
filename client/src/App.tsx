@@ -1,4 +1,4 @@
-import { useLoaderData, useSearchParams } from "react-router-dom";
+import { useLoaderData, useSearchParams, useNavigate } from "react-router-dom";
 import "./App.css";
 import { SwagCard } from "./components/swagCard";
 
@@ -18,15 +18,18 @@ function App() {
   const swagData = useLoaderData() as Swag[];
   const [searchParams] = useSearchParams();
   const encryptedBalance = searchParams.get("points");
+  const navigate = useNavigate();
 
-  let balance = 0;
+  let balance = 50;
   if (encryptedBalance) {
-    balance = parseInt(decryptData(decodeURIComponent(encryptedBalance)));
+    balance = parseInt(decryptData(decodeURIComponent(encryptedBalance))) + 50;
   }
 
   const buyNowClicked = (id: number) => {
     const boughtProduct = swagData.find((swag) => swag.id === id);
-
+    navigate("/checkout", {
+      state: { product: boughtProduct, balance: balance },
+    });
     // fetch(`/api/accept/createAPayment`)
     //   .then((response) => response.json())
     //   .then((data) => {

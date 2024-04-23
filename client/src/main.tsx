@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Checkout from "./Checkout.tsx";
 
 const fetchData = async () => {
   try {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     loader: () => fetchData(),
+  },
+  {
+    path: "/checkout",
+    element: <Checkout />,
   },
 ]);
 

@@ -2,8 +2,8 @@ import { Swag } from "../App";
 import React from "react";
 type SwagCardProps = {
   item: Swag;
-  onClickFunction: (id: number) => void;
-  balance: number;
+  onClickFunction?: (id: number) => void;
+  balance?: number;
 };
 
 export const SwagCard = ({ item, onClickFunction, balance }: SwagCardProps) => {
@@ -24,19 +24,21 @@ export const SwagCard = ({ item, onClickFunction, balance }: SwagCardProps) => {
         <p className="text-sm font-medium text-gray-900">${item.price}</p>
       </div>
 
-      <button
-        type="submit"
-        disabled={item.stock < 1 || balance < item.price}
-        title={
-          item.stock < 1 || balance < item.price
-            ? "Out of stock or insufficient funds"
-            : "Buy Now"
-        }
-        className={`w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-75 disabled:pointer-events-auto`}
-        onClick={() => onClickFunction(item.id)}
-      >
-        Buy Now
-      </button>
+      {onClickFunction && balance && (
+        <button
+          type="submit"
+          disabled={item.stock < 1 || balance < item.price}
+          title={
+            item.stock < 1 || balance < item.price
+              ? "Out of stock or insufficient funds"
+              : "Buy Now"
+          }
+          className={`w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-75 disabled:pointer-events-auto`}
+          onClick={() => onClickFunction(item.id)}
+        >
+          Buy Now
+        </button>
+      )}
     </div>
   );
 };
