@@ -37,7 +37,11 @@ export const OrderSummary = ({ product }: { product: Swag }) => {
             <p>${product.price}</p>
           </div>
           <div className="mt-6">
-            <button className="w-full flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+            <button
+              type="submit"
+              form="checkout-form"
+              className="w-full flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+            >
               Confirm purchase
             </button>
           </div>

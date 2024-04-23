@@ -1,21 +1,21 @@
 import React, { useState } from "react";
-import { Swag } from "../App";
+import { UserDetails } from "../Checkout";
 
-export default function CheckoutForm({ product }: { product: Swag }) {
+export default function CheckoutForm({
+  onConfirmPurchase,
+}: {
+  onConfirmPurchase: (details: UserDetails) => void;
+}) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(firstName);
-    console.log(lastName);
-    console.log(email);
-    console.log(event);
-    console.log(product);
+    onConfirmPurchase({ firstName, lastName, email });
   };
   return (
-    <form onSubmit={handleSubmit} className="grow basis-1/2">
+    <form id="checkout-form" className="grow basis-1/2" onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div className=" pb-12">
           <h2 className="text-xl leading-7 text-gray-900 w-fit">
