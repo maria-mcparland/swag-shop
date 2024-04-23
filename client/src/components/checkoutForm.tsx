@@ -22,7 +22,7 @@ export default function CheckoutForm({ product }: { product: Swag }) {
             Contact Information
           </h2>
 
-          <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div className="mt-6 sm:grid grid-cols gap-x-6 gap-y-8 sm:grid-cols-6 block">
             <div className="sm:col-span-3">
               <label
                 htmlFor="first-name"

@@ -12,7 +12,7 @@ export default function Checkout() {
   return (
     <main>
       <Header balance={location.state.balance} />
-      <div className="flex gap-8 bg-gray-100 p-6 rounded border">
+      <div className="flex sm:gap-8 bg-gray-100 p-6 rounded border flex-wrap sm:flex-nowrap">
         <CheckoutForm product={location.state.product} />
         <OrderSummary product={location.state.product} />
       </div>

@@ -1,9 +1,11 @@
 import React from "react";
 import { Swag } from "../App";
+import { useNavigate } from "react-router-dom";
 
 export const OrderSummary = ({ product }: { product: Swag }) => {
+  const navigate = useNavigate();
   return (
-    <div className="grow basis-1/2 border-gray-200 border-l pl-6">
+    <div className="grow basis-1/2 border-gray-200 lg:border-l lg:pl-6">
       <h2 className="text-xl leading-7 text-gray-900 w-fit">Order Summary</h2>
       <div className="bg-white  border border-gray-200 my-4 p-8 rounded-md">
         <div className="flow-root mb-6">
@@ -35,12 +37,9 @@ export const OrderSummary = ({ product }: { product: Swag }) => {
             <p>${product.price}</p>
           </div>
           <div className="mt-6">
-            <a
-              href="#"
-              className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-            >
+            <button className="w-full flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
               Confirm purchase
-            </a>
+            </button>
           </div>
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
             <p>
@@ -48,6 +47,7 @@ export const OrderSummary = ({ product }: { product: Swag }) => {
               <button
                 type="button"
                 className="font-medium text-indigo-600 hover:text-indigo-500 pl-2"
+                onClick={() => navigate("/")}
               >
                 Continue Shopping
                 <span aria-hidden="true"> &rarr;</span>
