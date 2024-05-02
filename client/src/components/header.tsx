@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { updatePointsInUrl } from "../utils/points";
+import { Link } from "react-router-dom";
 
 export const Header = ({ balance }: { balance: number }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navLinks = [
-    { title: "Swag", path: `/?${updatePointsInUrl(balance)}` },
+    { title: "Swag", path: `/` },
     { title: "Asteroids", path: "https://asteroids.unicorn-payments-dev.com" },
   ];
 
@@ -54,13 +54,13 @@ export const Header = ({ balance }: { balance: number }) => {
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
           {navLinks.map((link, index) => (
-            <a
-              href={link.path}
+            <Link
               className="text-sm font-semibold leading-6 text-gray-900"
               key={index}
+              to={link.path}
             >
               {link.title}
-            </a>
+            </Link>
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
