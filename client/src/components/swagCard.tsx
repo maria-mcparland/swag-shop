@@ -7,6 +7,7 @@ type SwagCardProps = {
 };
 
 export const SwagCard = ({ item, onClickFunction, balance }: SwagCardProps) => {
+
   return (
     <div className="flex flex-grow flex-col justify-around">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">

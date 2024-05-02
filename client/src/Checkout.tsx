@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-
-import { Header } from "./components/header";
+import { useLocation, useOutletContext } from "react-router-dom";
 import CheckoutForm from "./components/checkoutForm";
 import { OrderSummary } from "./components/orderSummary";
 
@@ -10,14 +8,25 @@ export type UserDetails = {
   lastName?: string;
   email?: string;
 };
+
+enum CheckoutStatus {
+  IDLE = "IDLE",
+  SUBMITTING = "SUBMITTING",
+  COMPLETED = "COMPLETED",
+  ERROR = "ERROR",
+}
+
 export default function Checkout() {
   const location = useLocation();
-  const navigate = useNavigate();
-
-  const [submitting, isSubmitting] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [balance, setBalance]: [balance: number, (balance: number) => void] =
+    useOutletContext();
+  const [checkoutStatus, updateCheckoutStatus] = useState(CheckoutStatus.IDLE);
 
   const onConfirmPurchase = (details: UserDetails) => {
-    isSubmitting(true);
+    updateCheckoutStatus(CheckoutStatus.SUBMITTING);
+    const newBalance = balance - location.state.product.price;
+
     fetch(`/api/accept/createAPayment`)
       .then((response) => response.json())
       .then((data) => {
@@ -41,12 +50,13 @@ export default function Checkout() {
             .then((response) => response.json())
             .then((data) => {
               console.log(data);
-              isSubmitting(false);
-              navigate("/");
+              setBalance(newBalance);
+              updateCheckoutStatus(CheckoutStatus.COMPLETED);
             })
             .catch((error) => {
               // Handle any errors here
               console.error(error);
+              updateCheckoutStatus(CheckoutStatus.ERROR);
             });
         }
       })
@@ -58,15 +68,18 @@ export default function Checkout() {
 
   return (
     <main>
-      <Header balance={location.state.balance} />
       <div className="flex sm:gap-8 bg-gray-100 p-6 rounded border flex-wrap sm:flex-nowrap">
-        {!submitting ? (
+        {checkoutStatus === CheckoutStatus.IDLE && (
           <>
             <CheckoutForm onConfirmPurchase={onConfirmPurchase} />
             <OrderSummary product={location.state.product} />
           </>
-        ) : (
+        )}
+        {checkoutStatus === CheckoutStatus.SUBMITTING && (
           <div>Submitting...</div>
+        )}
+        {checkoutStatus === CheckoutStatus.COMPLETED && (
+          <div>Thank you for your purchase! You should have an email....</div>
         )}
       </div>
     </main>

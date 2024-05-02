@@ -4,6 +4,8 @@ import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Checkout from "./Checkout.tsx";
+import ErrorPage from "./Error.tsx";
+import Home from "./Home.tsx";
 
 const fetchData = async () => {
   try {
@@ -18,11 +20,20 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    loader: () => fetchData(),
-  },
-  {
-    path: "/checkout",
-    element: <Checkout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+        errorElement: <ErrorPage />,
+        loader: () => fetchData(),
+      },
+      {
+        path: "/checkout",
+        errorElement: <ErrorPage />,
+        element: <Checkout />,
+      },
+    ],
   },
 ]);
 

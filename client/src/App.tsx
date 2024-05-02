@@ -1,10 +1,9 @@
-import { useLoaderData, useSearchParams, useNavigate } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import "./App.css";
-import { SwagCard } from "./components/swagCard";
 
-import React from "react";
-import { decryptData } from "./utils/encryption";
+import React, { useState } from "react";
 import { Header } from "./components/header";
+import { decryptData } from "./utils/encryption";
 export type Swag = {
   id: number;
   name: string;
@@ -15,39 +14,18 @@ export type Swag = {
 };
 
 function App() {
-  const swagData = useLoaderData() as Swag[];
   const [searchParams] = useSearchParams();
   const encryptedBalance = searchParams.get("points");
-  const navigate = useNavigate();
-
-  let balance = 50;
+  let unencryptedBalance = 0;
   if (encryptedBalance) {
-    balance = parseInt(decryptData(decodeURIComponent(encryptedBalance))) + 50;
+    unencryptedBalance = parseInt(decryptData(encryptedBalance));
   }
-
-  const buyNowClicked = (id: number) => {
-    const boughtProduct = swagData.find((swag) => swag.id === id);
-    navigate("/checkout", {
-      state: { product: boughtProduct, balance: balance },
-    });
-  
-  };
+  const [balance, setBalance] = useState<number>(unencryptedBalance);
 
   return (
     <main className="bg-white">
       <Header balance={balance} />
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 px-4 py-16 ">
-        {swagData &&
-          swagData.length > 0 &&
-          swagData.map((swag) => (
-            <SwagCard
-              key={swag.id}
-              item={swag}
-              onClickFunction={buyNowClicked}
-              balance={balance}
-            />
-          ))}
-      </div>
+      <Outlet context={[balance, setBalance]} />
     </main>
   );
 }

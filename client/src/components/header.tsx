@@ -1,16 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
+import { updatePointsInUrl } from "../utils/points";
 
-type HeaderProps = {
-  balance: number;
-};
-
-export const Header = ({ balance }: HeaderProps) => {
+export const Header = ({ balance }: { balance: number }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navLinks = [
-    { title: "Swag", path: "/" },
-    { title: "Asteroids", path: "https://asteroids.unicorn-payments.com" },
+    { title: "Swag", path: `/?${updatePointsInUrl(balance)}` },
+    { title: "Asteroids", path: "https://asteroids.unicorn-payments-dev.com" },
   ];
 
   return (
