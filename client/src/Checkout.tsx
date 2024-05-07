@@ -25,11 +25,18 @@ export default function Checkout() {
   const [checkoutStatus, updateCheckoutStatus] = useState(CheckoutStatus.IDLE);
 
   const product = location.state.product;
+
+  AbortSignal.timeout ??= function timeout(ms) {
+    const ctrl = new AbortController();
+    setTimeout(() => ctrl.abort(), ms);
+    return ctrl.signal;
+  };
+
   const onConfirmPurchase = (details: UserDetails) => {
     updateCheckoutStatus(CheckoutStatus.SUBMITTING);
     const newBalance = balance - location.state.product.price;
 
-    fetch(`/api/accept/createAPayment`)
+    fetch(`/api/accept/createAPayment`, { signal: AbortSignal.timeout(5000) })
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data here
@@ -65,6 +72,7 @@ export default function Checkout() {
       .catch((error) => {
         // Handle any errors here
         console.error(error);
+        updateCheckoutStatus(CheckoutStatus.ERROR);
       });
   };
 
@@ -97,8 +105,18 @@ export default function Checkout() {
           </div>
         )}
         {checkoutStatus === CheckoutStatus.ERROR && (
-          <div>
-            Oh no! Something went wrong! Head to our swag stand for help
+          <div className="bg-white  border border-gray-200 my-4 p-8 rounded-md min-w-full">
+            <h2 className="text-xl leading-7 text-gray-900">
+              Oh no! Something went wrong! Head to our swag stand for help
+            </h2>
+            <button
+              type="button"
+              className="font-medium text-indigo-600 hover:text-indigo-500 pl-2 mt-10"
+              onClick={() => navigate("/")}
+            >
+              Continue Shopping
+              <span aria-hidden="true"> &rarr;</span>
+            </button>
           </div>
         )}
       </div>

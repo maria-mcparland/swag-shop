@@ -19,7 +19,7 @@ function Home() {
 
   const buyNowClicked = (id: number) => {
     const boughtProduct = swagData.find((swag) => swag.id === id);
-    if (boughtProduct && boughtProduct?.price < balance) {
+    if (boughtProduct && boughtProduct?.price <= balance) {
       navigate("/checkout", {
         state: { product: boughtProduct },
       });
