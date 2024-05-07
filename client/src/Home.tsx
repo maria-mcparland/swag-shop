@@ -15,13 +15,15 @@ export type Swag = {
 function Home() {
   const swagData = useLoaderData() as Swag[];
   const navigate = useNavigate();
-  const balance = useOutletContext<number>();
+  const [balance]: [balance: number] = useOutletContext();
 
   const buyNowClicked = (id: number) => {
     const boughtProduct = swagData.find((swag) => swag.id === id);
-    navigate("/checkout", {
-      state: { product: boughtProduct },
-    });
+    if (boughtProduct && boughtProduct?.price < balance) {
+      navigate("/checkout", {
+        state: { product: boughtProduct },
+      });
+    }
   };
 
   return (
@@ -29,12 +31,7 @@ function Home() {
       {swagData &&
         swagData.length > 0 &&
         swagData.map((swag) => (
-          <SwagCard
-            key={swag.id}
-            item={swag}
-            onClickFunction={buyNowClicked}
-            balance={balance}
-          />
+          <SwagCard key={swag.id} item={swag} onClickFunction={buyNowClicked} />
         ))}
     </div>
   );

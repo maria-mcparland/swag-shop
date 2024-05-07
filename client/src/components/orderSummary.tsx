@@ -22,9 +22,7 @@ export const OrderSummary = ({ product }: { product: Swag }) => {
               <div className="ml-4 flex flex-1 flex-col">
                 <div>
                   <div className="flex justify-between text-base font-medium text-gray-900">
-                    <h3>
-                      <a href="#">{product.name}</a>
-                    </h3>
+                    <h3>{product.name}</h3>
                   </div>
                 </div>
               </div>
@@ -33,7 +31,7 @@ export const OrderSummary = ({ product }: { product: Swag }) => {
         </div>
         <div className="border-t border-gray-200 p-4 sm:px-6">
           <div className="flex justify-between text-base font-medium text-gray-900">
-            <p>Total</p>
+            <p>Total </p>
             <p>${product.price}</p>
           </div>
           <div className="mt-6">

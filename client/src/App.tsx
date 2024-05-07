@@ -16,7 +16,7 @@ export type Swag = {
 function App() {
   const [searchParams] = useSearchParams();
   const encryptedBalance = searchParams.get("points");
-  let unencryptedBalance = 0;
+  let unencryptedBalance = 10;
   if (encryptedBalance) {
     unencryptedBalance = parseInt(decryptData(encryptedBalance));
   }
