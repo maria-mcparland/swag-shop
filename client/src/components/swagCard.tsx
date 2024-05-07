@@ -1,13 +1,13 @@
+import { useOutletContext } from "react-router-dom";
 import { Swag } from "../App";
 import React from "react";
 type SwagCardProps = {
   item: Swag;
   onClickFunction?: (id: number) => void;
-  balance?: number;
 };
 
-export const SwagCard = ({ item, onClickFunction, balance }: SwagCardProps) => {
-
+export const SwagCard = ({ item, onClickFunction }: SwagCardProps) => {
+  const [balance]: [balance: number] = useOutletContext();
   return (
     <div className="flex flex-grow flex-col justify-around">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
@@ -25,7 +25,7 @@ export const SwagCard = ({ item, onClickFunction, balance }: SwagCardProps) => {
         <p className="text-sm font-medium text-gray-900">${item.price}</p>
       </div>
 
-      {onClickFunction && balance && (
+      {onClickFunction && (
         <button
           type="submit"
           disabled={item.stock < 1 || balance < item.price}
