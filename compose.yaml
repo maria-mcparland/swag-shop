@@ -1,5 +1,30 @@
 services:
-  frontend:
-    build: client
+  server:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
     ports:
-    - 5173:5173
+      - 8081:8081  
+    volumes:
+      - db_data:/app/server
+    networks:
+      - mynet
+
+  client:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - 4173:4173  
+    volumes:
+      - db_data:/app/client  
+    depends_on:
+      - server  
+    networks:
+      - mynet
+
+volumes:
+  db_data:
+
+networks:
+  mynet:

@@ -17,9 +17,9 @@ COPY . .
 # Build the application for production with Yarn
 RUN yarn build
 
-# Expose port 80 to the Docker host, so we can access it
+# Expose port to the Docker host, so we can access it
 # from the outside.
-EXPOSE 5173
+EXPOSE 4173
 
 # When the container starts, nginx keeps running.
-CMD [ "yarn", "preview", "--", "--host", "0.0.0.0"]
+CMD [ "yarn","run", "preview", "--host", "0.0.0.0"]
