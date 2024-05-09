@@ -2,12 +2,17 @@ import React from "react";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Link } from "react-router-dom";
+import { updatePointsInUrl } from "../utils/points";
 
 export const Header = ({ balance }: { balance: number }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { VITE_ASTEROIDS_URL } = import.meta.env;
   const navLinks = [
     { title: "Swag", path: `/` },
-    { title: "Asteroids", path: "https://asteroids.unicorn-payments-dev.com" },
+    {
+      title: "Asteroids",
+      path: `${VITE_ASTEROIDS_URL}${updatePointsInUrl(balance)}`,
+    },
   ];
 
   return (
