@@ -1,30 +1,27 @@
 services:
   server:
-    build: 
+    platform: linux/amd64
+    build:
       context: ./server
       dockerfile: Dockerfile
     ports:
-      - 8081:8081  
-    volumes:
-      - db_data:/app/server
+      - 8081:8081
     networks:
       - mynet
+    image: mariamcparland/server
 
   client:
-    build: 
+    platform: linux/amd64
+    build:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - 4173:4173  
-    volumes:
-      - db_data:/app/client  
+      - 8080:8080
     depends_on:
-      - server  
+      - server
     networks:
       - mynet
-
-volumes:
-  db_data:
+    image: mariamcparland/client
 
 networks:
   mynet:

@@ -1,25 +1,71 @@
-# syntax=docker/dockerfile:1.4
+# syntax=docker/dockerfile:1
 
-FROM node:20-alpine  
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Dockerfile reference guide at
+# https://docs.docker.com/go/dockerfile-reference/
 
-ENV CI=true
+# Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
-WORKDIR /app/frontend
-# Copy package.json and yarn.lock files
-COPY package.json yarn.lock ./
+ARG NODE_VERSION=21.6.2
 
-# Install dependencies with Yarn
-RUN yarn install --frozen-lockfile
+################################################################################
+# Use node image for base image for all stages.
+FROM node:${NODE_VERSION}-alpine as base
 
-# Bundle app source inside Docker image
+# Set working directory for all build stages.
+WORKDIR /usr/src/app
+
+
+################################################################################
+# Create a stage for installing production dependecies.
+FROM base as deps
+
+# Download dependencies as a separate step to take advantage of Docker's caching.
+# Leverage a cache mount to /root/.yarn to speed up subsequent builds.
+# Leverage bind mounts to package.json and yarn.lock to avoid having to copy them
+# into this layer.
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=yarn.lock,target=yarn.lock \
+    --mount=type=cache,target=/root/.yarn \
+    yarn install --production --frozen-lockfile
+
+################################################################################
+# Create a stage for building the application.
+FROM deps as build
+
+# Download additional development dependencies before building, as some projects require
+# "devDependencies" to be installed to build. If you don't need this, remove this step.
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=yarn.lock,target=yarn.lock \
+    --mount=type=cache,target=/root/.yarn \
+    yarn install --frozen-lockfile
+
+# Copy the rest of the source files into the image.
 COPY . .
+# Run the build script.
+RUN yarn run build
 
-# Build the application for production with Yarn
-RUN yarn build
+################################################################################
+# Create a new stage to run the application with minimal runtime dependencies
+# where the necessary files are copied from the build stage.
+FROM base as final
 
-# Expose port to the Docker host, so we can access it
-# from the outside.
-EXPOSE 4173
+# Use production node environment by default.
+ENV NODE_ENV production
 
-# When the container starts, nginx keeps running.
-CMD [ "yarn","run", "preview", "--host", "0.0.0.0"]
+# Run the application as a non-root user.
+
+# Copy package.json so that package manager commands can be used.
+COPY package.json .
+
+# Copy the production dependencies from the deps stage and also
+# the built application from the build stage into the image.
+COPY --from=deps /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/src/app/. ./.
+
+
+# Expose the port that the application listens on.
+EXPOSE 8080
+
+# Run the application.
+CMD [ "yarn", "preview", "--port","8080", "--host", "0.0.0.0"]
