@@ -25,13 +25,14 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
       - name: Make envfile
+        id: env
         uses: SpicyPizza/create-envfile@v2.0.3
         with:
           envkey_VITE_ASTEROIDS_URL: ${{ secrets.SWAG_URL }}
           envkey_VITE_KEY: ${{ secrets.KEY }}
       - name: Docker Compose build
+        if: steps.env.outcome == 'success'
         run: docker-compose build
-        working-directory: ./
 
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
