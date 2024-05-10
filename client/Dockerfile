@@ -57,6 +57,7 @@ ENV NODE_ENV production
 
 # Copy package.json so that package manager commands can be used.
 COPY package.json .
+RUN ls
 COPY .env .
 
 # Copy the production dependencies from the deps stage and also
