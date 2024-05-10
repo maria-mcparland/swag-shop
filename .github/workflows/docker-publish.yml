@@ -28,8 +28,8 @@ jobs:
         id: env
         uses: SpicyPizza/create-envfile@v2.0.3
         with:
-          envkey_VITE_ASTEROIDS_URL: ${{ secrets.SWAG_URL }}
-          envkey_VITE_KEY: ${{ secrets.KEY }}
+          envkey_VITE_ASTEROIDS_URL: ${{ secrets.VITE_ASTEROIDS_URL }}
+          envkey_VITE_KEY: ${{ secrets.VITE_KEY }}
       - name: Docker Compose build
         if: steps.env.outcome == 'success'
         run: docker-compose build
