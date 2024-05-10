@@ -27,7 +27,7 @@ jobs:
       - name: Make envfile
         id: env
         uses: SpicyPizza/create-envfile@v2.0.3
-        working-directory: ./client
+        directory: ./client
         with:
           envkey_VITE_ASTEROIDS_URL: ${{ secrets.VITE_ASTEROIDS_URL }}
           envkey_VITE_KEY: ${{ secrets.VITE_KEY }}
