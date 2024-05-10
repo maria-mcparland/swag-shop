@@ -27,10 +27,10 @@ jobs:
       - name: Make envfile
         id: env
         uses: SpicyPizza/create-envfile@v2.0.3
-        directory: ./client
         with:
           envkey_VITE_ASTEROIDS_URL: ${{ secrets.VITE_ASTEROIDS_URL }}
           envkey_VITE_KEY: ${{ secrets.VITE_KEY }}
+          directory: ./client
       - name: Docker Compose build
         if: steps.env.outcome == 'success'
         run: docker-compose build
