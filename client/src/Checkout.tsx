@@ -116,17 +116,19 @@ export default function Checkout() {
         {checkoutStatus === CheckoutStatus.COMPLETED && (
           <div className="bg-white  border border-gray-200 my-4 p-8 rounded-md min-w-full">
             <h2 className="text-xl leading-7 text-gray-900">
-              Thank you for your purchase! Head to our swag stand to get your
-              items!
+              Thank you for your purchase. Head to our swag stand with this page
+              to get your item.
             </h2>
-            <button
-              type="button"
-              className="font-medium text-indigo-600 hover:text-indigo-500 pl-2 mt-10"
-              onClick={() => navigate("/")}
-            >
-              Continue Shopping
-              <span aria-hidden="true"> &rarr;</span>
-            </button>
+            <div className="flex mt-10 gap-10">
+              <div className="h-40 w-40 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="h-full w-full object-cover object-center"
+                />
+              </div>
+              <h3 className="text-base text-gray-900">{product.name} x1</h3>
+            </div>
           </div>
         )}
         {checkoutStatus === CheckoutStatus.ERROR && (
