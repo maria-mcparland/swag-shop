@@ -4,8 +4,7 @@
         "name": "Hoodie",
         "price": 200,
         "description": "An awesome J.P. Morgan hoodie!",
-        "stock": 12,
-        "image": "/images/hoodie.png"
+        "stock": 12
     },
     {
         "id": "2",

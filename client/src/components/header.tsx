@@ -10,7 +10,7 @@ export const Header = ({ balance }: { balance: number }) => {
   const navLinks = [
     { title: "Swag", path: `/` },
     {
-      title: "Asteroids",
+      title: "Space Unicorns",
       path: `${VITE_ASTEROIDS_URL}${updatePointsInUrl(balance)}`,
     },
   ];
