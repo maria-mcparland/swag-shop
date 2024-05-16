@@ -1,9 +1,11 @@
 services:
   server:
-    platform: linux/amd64
     build:
       context: ./server
       dockerfile: Dockerfile
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64"      
     ports:
       - 8081:8081
     networks:
@@ -11,11 +13,13 @@ services:
     image: mariamcparland/server
 
   client:
-    platform: linux/amd64
     build:
       context: ./client
       dockerfile: Dockerfile
-    ports:
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64" 
+   ports:
       - 8080:8080
     depends_on:
       - server
